@@ -5,27 +5,11 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyBatteryPoweredSensor", "BatteryPoweredSensor.vcxproj", "{020367CB-D606-4C70-BA2C-D881F4E94AD3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RelayActuator", "..\..\131544780346737611\RelayActuator\RelayActuator.vcxproj", "{D7E3F52D-2B91-4BE7-BD1E-2FCC4F3FF4FD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multiple", "..\..\My Examples\Multiple\Multiple.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClearEepromConfig", "..\..\131454924664670235\ClearEepromConfig\ClearEepromConfig.vcxproj", "{092B4EA1-15E5-4393-B97B-D8E38A8EFA7E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multibus_simple", "..\..\My Examples\Multibus_simple\Multibus_simple.vcxproj", "{F262A442-E745-4E2A-B478-94B9972204DB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RFM69_RFM95_ATC_SignalReport", "..\..\131564644218038914\RFM69_RFM95_ATC_SignalReport\RFM69_RFM95_ATC_SignalReport.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MySensorsStressTest", "..\..\..\MySensorsStressTest\MySensorsStressTest.vcxproj", "{6ECD0244-583E-4ED9-A833-0D6F8B8DDDF1}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyPiramidController", "..\..\..\MyPiramidController\MyPiramidController.vcxproj", "{2405A2DE-6071-432A-9C83-43EBD8BFC57B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eeprom_clear", "..\..\131619124482381372\eeprom_clear\eeprom_clear.vcxproj", "{6B112BB8-F71B-4420-9DFA-8B5CDD27608E}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneWire", "..\..\..\libraries\OneWire\OneWire.vcxitems", "{33F73AC8-B870-4A19-91F6-929C77DE9BC2}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BarometricPressureSensor", "..\..\131619136322984169\BarometricPressureSensor\BarometricPressureSensor.vcxproj", "{40E6A2B7-1632-4B65-A488-3D315FEB0161}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPI", "..\..\..\..\..\..\AppData\Local\arduino15\packages\STM32\hardware\stm32\2018.1.18\libraries\SPI\SPI.vcxitems", "{AF718274-B039-413A-B336-E5E5E2573A9F}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arduino_874355", "..\..\..\libraries\arduino_874355\arduino_874355.vcxitems", "{95ECB877-DCB2-4799-9DFB-662CCF262239}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GatewaySerial", "..\..\131653664264868587\GatewaySerial\GatewaySerial.vcxproj", "{68887D31-1454-4977-A6F1-7AC2C643EF5E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eeprom_clear", "..\..\My Examples\eeprom_clear\eeprom_clear.vcxproj", "{494B374A-1380-4502-9C88-26462DEAFB55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,38 +21,18 @@ Global
 		{020367CB-D606-4C70-BA2C-D881F4E94AD3}.Debug|x86.Build.0 = Debug|Win32
 		{020367CB-D606-4C70-BA2C-D881F4E94AD3}.Release|x86.ActiveCfg = Release|Win32
 		{020367CB-D606-4C70-BA2C-D881F4E94AD3}.Release|x86.Build.0 = Release|Win32
-		{D7E3F52D-2B91-4BE7-BD1E-2FCC4F3FF4FD}.Debug|x86.ActiveCfg = Debug|Win32
-		{D7E3F52D-2B91-4BE7-BD1E-2FCC4F3FF4FD}.Debug|x86.Build.0 = Debug|Win32
-		{D7E3F52D-2B91-4BE7-BD1E-2FCC4F3FF4FD}.Release|x86.ActiveCfg = Release|Win32
-		{D7E3F52D-2B91-4BE7-BD1E-2FCC4F3FF4FD}.Release|x86.Build.0 = Release|Win32
-		{092B4EA1-15E5-4393-B97B-D8E38A8EFA7E}.Debug|x86.ActiveCfg = Debug|Win32
-		{092B4EA1-15E5-4393-B97B-D8E38A8EFA7E}.Debug|x86.Build.0 = Debug|Win32
-		{092B4EA1-15E5-4393-B97B-D8E38A8EFA7E}.Release|x86.ActiveCfg = Release|Win32
-		{092B4EA1-15E5-4393-B97B-D8E38A8EFA7E}.Release|x86.Build.0 = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.ActiveCfg = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
-		{6ECD0244-583E-4ED9-A833-0D6F8B8DDDF1}.Debug|x86.ActiveCfg = Debug|Win32
-		{6ECD0244-583E-4ED9-A833-0D6F8B8DDDF1}.Debug|x86.Build.0 = Debug|Win32
-		{6ECD0244-583E-4ED9-A833-0D6F8B8DDDF1}.Release|x86.ActiveCfg = Release|Win32
-		{6ECD0244-583E-4ED9-A833-0D6F8B8DDDF1}.Release|x86.Build.0 = Release|Win32
-		{2405A2DE-6071-432A-9C83-43EBD8BFC57B}.Debug|x86.ActiveCfg = Debug|Win32
-		{2405A2DE-6071-432A-9C83-43EBD8BFC57B}.Debug|x86.Build.0 = Debug|Win32
-		{2405A2DE-6071-432A-9C83-43EBD8BFC57B}.Release|x86.ActiveCfg = Release|Win32
-		{2405A2DE-6071-432A-9C83-43EBD8BFC57B}.Release|x86.Build.0 = Release|Win32
-		{6B112BB8-F71B-4420-9DFA-8B5CDD27608E}.Debug|x86.ActiveCfg = Debug|Win32
-		{6B112BB8-F71B-4420-9DFA-8B5CDD27608E}.Debug|x86.Build.0 = Debug|Win32
-		{6B112BB8-F71B-4420-9DFA-8B5CDD27608E}.Release|x86.ActiveCfg = Release|Win32
-		{6B112BB8-F71B-4420-9DFA-8B5CDD27608E}.Release|x86.Build.0 = Release|Win32
-		{40E6A2B7-1632-4B65-A488-3D315FEB0161}.Debug|x86.ActiveCfg = Debug|Win32
-		{40E6A2B7-1632-4B65-A488-3D315FEB0161}.Debug|x86.Build.0 = Debug|Win32
-		{40E6A2B7-1632-4B65-A488-3D315FEB0161}.Release|x86.ActiveCfg = Release|Win32
-		{40E6A2B7-1632-4B65-A488-3D315FEB0161}.Release|x86.Build.0 = Release|Win32
-		{68887D31-1454-4977-A6F1-7AC2C643EF5E}.Debug|x86.ActiveCfg = Debug|Win32
-		{68887D31-1454-4977-A6F1-7AC2C643EF5E}.Debug|x86.Build.0 = Debug|Win32
-		{68887D31-1454-4977-A6F1-7AC2C643EF5E}.Release|x86.ActiveCfg = Release|Win32
-		{68887D31-1454-4977-A6F1-7AC2C643EF5E}.Release|x86.Build.0 = Release|Win32
+		{F262A442-E745-4E2A-B478-94B9972204DB}.Debug|x86.ActiveCfg = Debug|Win32
+		{F262A442-E745-4E2A-B478-94B9972204DB}.Debug|x86.Build.0 = Debug|Win32
+		{F262A442-E745-4E2A-B478-94B9972204DB}.Release|x86.ActiveCfg = Release|Win32
+		{F262A442-E745-4E2A-B478-94B9972204DB}.Release|x86.Build.0 = Release|Win32
+		{494B374A-1380-4502-9C88-26462DEAFB55}.Debug|x86.ActiveCfg = Debug|Win32
+		{494B374A-1380-4502-9C88-26462DEAFB55}.Debug|x86.Build.0 = Debug|Win32
+		{494B374A-1380-4502-9C88-26462DEAFB55}.Release|x86.ActiveCfg = Release|Win32
+		{494B374A-1380-4502-9C88-26462DEAFB55}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

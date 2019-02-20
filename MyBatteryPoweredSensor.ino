@@ -36,17 +36,18 @@
 // Enable and select radio type attached
 //#define MY_DEBUG_VERBOSE_RFM69
 //#define MY_DEBUG_VERBOSE_RFM69_REGISTERS
+//#define MY_RFM69_RST_PIN (4)
 #define MY_RADIO_RFM69
 #define MY_IS_RFM69HW
 #define MY_RFM69_NEW_DRIVER   // ATC on RFM69 works only with the new driver (not compatible with old=default driver)
 #define MY_RFM69_ATC_TARGET_RSSI_DBM (-70)  // target RSSI -70dBm
 #define MY_RFM69_MAX_POWER_LEVEL_DBM (10)   // max. TX power 10dBm = 10mW
-#define MY_SENSOR_NETWORK
+//#define MY_SENSOR_NETWORK
 #include <MyConfig.h>
 
 #define COMPARE_TEMP 1 // Send temperature only if changed? 1 = Yes 0 = No
 #define ONE_WIRE_BUS 3 // Pin where dallase sensor is connected ->PD3
-#define MAX_ATTACHED_DS18B20 16
+#define MAX_ATTACHED_DS18B20 4
 #define TEMPERATURE_PRECISION 12 // bit resolution
 #define BATT_OUTPUT_PIN A1
 
@@ -63,12 +64,12 @@ DallasTemperature sensors(&oneWire); // Pass the oneWire reference to Dallas Tem
 float lastTemperature[MAX_ATTACHED_DS18B20];
 int numSensors = 0;
 bool metric = true;
-DeviceAddress tempDeviceAddress;
+DeviceAddress tempDeviceAddress[MAX_ATTACHED_DS18B20];
 int resolution = 12;
 int sensorValue = 0;
 
 
-unsigned long SLEEP_TIME = 10 * 1000;  // sleep time between reads (seconds * 1000 milliseconds)
+unsigned long SLEEP_TIME = 15 * 1000;  // sleep time between reads (seconds * 1000 milliseconds)
 int oldBatteryPcnt = 0;
 int loopcounter = 10;
 
@@ -86,6 +87,9 @@ MyMessage msgRSSI_TX_PERC(CHILD_ID_RSSI, V_VAR5);
 
 void before()
 {
+	pinMode(BATT_OUTPUT_PIN, OUTPUT);
+	digitalWrite(BATT_OUTPUT_PIN, HIGH);
+	wait(500);
 	// Startup up the OneWire library
 	sensors.setResolution(12);
 	sensors.begin();
@@ -94,7 +98,6 @@ void before()
 
 void setup()
 {
-	digitalWrite(BATT_OUTPUT_PIN, 1);
 	analogReference(INTERNAL);
 	sensors.setWaitForConversion(false);
 	// second adc read to get a correct value
@@ -111,33 +114,34 @@ void presentation()
 {
 
 	// Send the sketch version information to the gateway and Controller
-	sendSketchInfo("MyBattery Meter", "1.2");
+	sendSketchInfo("MyBattery Meter", "1.3");
 	wait(1000);
 	// Fetch the number of attached temperature sensors  
 	numSensors = sensors.getDeviceCount();
-	int i;
+	//int i;
+	uint8_t i;
 	sensorValue = analogRead(BATTERY_SENSE_PIN);
 
 	// Present all sensors to controller
 	for (i = 0; i < numSensors && i < MAX_ATTACHED_DS18B20; i++) {
 		present(TEMP_SENSOR + i, S_TEMP, ("DEG C"), true);
 		// Search the wire for address
-		if (sensors.getAddress(tempDeviceAddress, i))
+		if (sensors.getAddress(tempDeviceAddress[i], i))
 		{
 			Serial.print("Found device ");
 			Serial.print(i, DEC);
 			Serial.print(" with address: ");
-			printAddress(tempDeviceAddress);
+			printAddress(tempDeviceAddress[i]);
 			Serial.println();
 
 			Serial.print("Setting resolution to ");
 			Serial.println(TEMPERATURE_PRECISION, DEC);
 
 			// set the resolution to TEMPERATURE_PRECISION bit (Each Dallas/Maxim device is capable of several different resolutions)
-			sensors.setResolution(tempDeviceAddress, TEMPERATURE_PRECISION);
+			sensors.setResolution(tempDeviceAddress[i], TEMPERATURE_PRECISION);
 
 			Serial.print("Resolution actually set to: ");
-			Serial.print(sensors.getResolution(tempDeviceAddress), DEC);
+			Serial.print(sensors.getResolution(tempDeviceAddress[i]), DEC);
 			Serial.println();
 		}
 		else {
@@ -156,15 +160,11 @@ void presentation()
 void loop()
 {
 	float temperature;
+
 	//switch the battery divder on this takes about 3µA
-	digitalWrite(BATT_OUTPUT_PIN, 1);
-
-	loopcounter++;
-#ifdef MY_DEBUG_PRINT
-	Serial.print("Loop= ");
-	Serial.println(loopcounter);
-#endif
-
+	pinMode(BATT_OUTPUT_PIN, OUTPUT);
+	digitalWrite(BATT_OUTPUT_PIN, HIGH);
+	//wait(1000);
 	// Fetch temperatures from Dallas sensors							
 	sensors.requestTemperatures();
 
@@ -172,32 +172,23 @@ void loop()
 	int16_t conversionTime = 700;//sensors.millisToWaitForConversion(sensors.getResolution());
 
 	// sleep() call can be replaced by wait() call if node need to process incoming messages (or if node is repeater)
-	sleep(conversionTime);
+    sleep(conversionTime);
 
 	// Read temperatures and send them to controller 
-	for (int i = 0; i < numSensors && i < MAX_ATTACHED_DS18B20; i++) {
+	for (uint8_t i = 0; i < numSensors && i < MAX_ATTACHED_DS18B20; i++) {
 		// Fetch and round temperature to one decimal
-		temperature = getControllerConfig().isMetric ? sensors.getTempCByIndex(i) : sensors.getTempFByIndex(i);
-
-		if (temperature < (lastTemperature[i] - 0.1) || temperature >(lastTemperature[i] + 0.1)) {
+		//temperature = getControllerConfig().isMetric ? sensors.getTempCByIndex(i) : sensors.getTempFByIndex(i);
+		temperature = sensors.getTempC(tempDeviceAddress[i]);
 			// Send in the new temperature
 			send(msgTemp.setSensor(TEMP_SENSOR + i).set(temperature, 2));
-			//loopcounter = 0;
-			}
-		// Save new temperatures for next compare
-		lastTemperature[i] = temperature;
 
 #ifdef MY_DEBUG_PRINT
+		Serial.print(sensors.getResolution(tempDeviceAddress[i]), DEC);
 		Serial.print(i);
 		Serial.print(". Temperature=");
 		Serial.println(temperature, 3);
 #endif
 		}
-		if (loopcounter >= 1) {
-			loopcounter = 0;
-			for (int i = 0; i < numSensors && i < MAX_ATTACHED_DS18B20; i++) {
-				send(msgTemp.setSensor(TEMP_SENSOR + i).set(temperature, 2));
-			}
 
 		// get the battery Voltage
 		sensorValue = analogRead(BATTERY_SENSE_PIN);
@@ -205,6 +196,9 @@ void loop()
 		// Sense point is bypassed with 0.1 uF cap to reduce noise at that point
 		// ((1.11e6+470e3)/470e3)*1.1 = Vmax = 3.7 Volts
 		// 3.7/1023 = Volts per bit = 0,003613281
+
+		//switch the battery divder off this saves about 3µA
+		digitalWrite(BATT_OUTPUT_PIN, LOW);
 
 #ifdef MY_DEBUG_PRINT
 		Serial.print("ADC=");
@@ -249,13 +243,11 @@ void loop()
 		send(msgRSSI_TX_PERC.set(transportGetSignalReport(SR_TX_POWER_PERCENT)));
 
 #endif
-		}
+
 
 
 
 	
-	//switch the battery divder off this saves about 3µA
-	digitalWrite(BATT_OUTPUT_PIN, 0);
 
 	sleep(SLEEP_TIME);
 
